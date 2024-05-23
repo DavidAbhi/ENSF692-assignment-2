@@ -84,8 +84,8 @@ def user_input(sensor):
                 action_message = "STOP"
 
             # Printing the action message and the current status
-            print(f"Action: {action_message}")
-            print(f"Traffic Light: {status['traffic_light']}, Pedestrian: {status['pedestrian_detected']}, Vehicle: {status['vehicle_detected']}")
+            print(f"\n {action_message}\n")
+            print(f"\n Traffic Light: {status['traffic_light']}, Pedestrian: {status['pedestrian_detected']}, Vehicle: {status['vehicle_detected']}\n")
 
         except ValueError:
             print("Invalid input. Please enter a number from 0 to 3.")
