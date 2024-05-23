@@ -43,6 +43,57 @@ class Sensor:
             "vehicle_detected": self.vehicle_detected
         }
 
+def user_input(sensor):
+    while True:
+
+        # Prompting the user for input
+
+        print("Select an option:")
+        print("1 to update the detected traffic light colour")
+        print("2 to update whether a pedestrian is detected")
+        print("3 to update whether a vehicle is detected")
+        print("0 to end the program")
+        try:
+            choice = int(input("Enter your choice: "))
+            if choice == 0:
+                print("Program ended.")
+                break
+            elif choice == 1:
+                color = input("Enter the traffic light color (green, yellow, red): ")
+                sensor.update_traffic_light(color)
+            elif choice == 2:
+                pedestrian_status = input("Is a pedestrian detected? (yes or no): ")
+                sensor.update_pedestrian_status(pedestrian_status)
+            elif choice == 3:
+                vehicle_status = input("Is a vehicle detected? (yes or no): ")
+                sensor.update_vehicle_status(vehicle_status)
+            else:
+                print("Invalid option. Please try again.")
+                continue
+
+            # Determining the status from the user inputs retrieved
+
+            status = sensor.get_status()
+            if status['traffic_light'] == "red" or status['pedestrian_detected'] == "yes" or status['vehicle_detected'] == "yes":
+                action_message = "STOP"
+            elif status['traffic_light'] == "green" and status['pedestrian_detected'] == "no" and status['vehicle_detected'] == "no":
+                action_message = "Proceed"
+            elif status['traffic_light'] == "yellow" and status['pedestrian_detected'] == "no" and status['vehicle_detected'] == "no":
+                action_message = "Caution"
+            else:
+                action_message = "STOP"
+
+            # Printing the action message and the current status
+            print(f"Action: {action_message}")
+            print(f"Traffic Light: {status['traffic_light']}, Pedestrian: {status['pedestrian_detected']}, Vehicle: {status['vehicle_detected']}")
+
+        except ValueError:
+            print("Invalid input. Please enter a number from 0 to 3.")
+
+def main():
+    sensor = Sensor()
+    user_input(sensor)
+
 if __name__ == '__main__':
     main()
 
